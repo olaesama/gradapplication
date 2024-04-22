@@ -1,0 +1,45 @@
+{% extends "base.html" %} 
+{% block body %} 
+<br>
+<br>
+<div class="container mt-5">
+    <h1 class="text-center mb-4" style="color: #410b13;">Transactions History</h1>
+<br>
+<br>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="background-color: #e4b363; color: #410b13;">Symbol</th>
+                <th style="background-color: #e4b363; color: #410b13;">Action</th>
+                <th style="background-color: #e4b363; color: #410b13;">Price $</th>
+            </tr>
+        </thead>
+        <tbody id="trades">
+            {% for trade in trades %}
+            <tr>
+                <td>{{ Stock.query.get(trade.stock_id).symbol }}</td>
+                <td>{{ trade.action }}</td>
+                <td>{{ trade.quantity }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}

@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% block body %}
+<br>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-12 text-center">
+            <br>
+            <h1 style="color: #410b13;">Let's Start Your Trading Journey!</h1>
+            <br>
+            <p class="lead">Top Company Tickers</p>
+            <div class="row row-cols-1 row-cols-md-4 g-4 mt-3">
+                <div class="col">
+                    <div class="card h-100" style="background-color: #CC5803; color: #000000;">
+                        <div class="card-body">
+                            <h5 class="card-title">Google</h5>
+                            <p class="card-text">GOOGL</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100" style="background-color: #FFB627; color: #000000;">
+                        <div class="card-body">
+                            <h5 class="card-title">Apple</h5>
+                            <p class="card-text">AAPL</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100" style="background-color: #E2711D; color: #000000;">
+                        <div class="card-body">
+                            <h5 class="card-title">Microsoft</h5>
+                            <p class="card-text">MSFT</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100" style="background-color: #E4B363; color: #000000;">
+                        <div class="card-body">
+                            <h5 class="card-title">Peripherals</h5>
+                            <p class="card-text">PRPH</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <canvas id="stockChart" width="800" height="400"></canvas>
+        </div>
+    </div>
+    <br>
+    <br>
+    <form id="tradeForm" method="POST">
+        <div class="form-group">
+            <label for="stock_symbol">Stock Symbol</label>
+            <input type="text" class="form-control" id="stock_symbol" name="stock_symbol" placeholder="Enter stock symbol"/>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="action">Action</label>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="action" id="action1" value="buy" checked />
+                <label class="form-check-label" for="action1"> Buy </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="action" id="action2" value="sell" />
+                <label class="form-check-label" for="action2"> Sell </label>
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+            <label for="quantity">Price $</label>
+            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Enter price" />
+        </div>
+        <br />
+        <button type="button" id="tradeButton" class="btn" style="background-color: brown; color: white;">Trade</button>
+    </form>
+</div>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+    document.getElementById('tradeButton').addEventListener('click', function() {
+        var stockSymbol = document.getElementById('stock_symbol').value;
+        var action = document.querySelector('input[name="action"]:checked').value;
+        var price = document.getElementById('quantity').value;
+
+        // Confirmation message
+        var confirmationMessage = 'Are you sure you want to ' + action + ' ' + stockSymbol + ' at $' + price + ' per share?';
+
+        if (confirm(confirmationMessage)) {
+            document.getElementById('tradeForm').submit();
+        } else {
+            return;
+        }
+    });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('stockChart').getContext('2d');
+    var stockChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul'],
+            datasets: [{
+                label: 'AAPL',
+                data: [65, 59, 80, 81, 56, 55, 40],
+                borderColor: '#FFB627',
+                borderWidth: 1,
+                fill: false
+            }, {
+                label: 'MSFT',
+                data: [28, 48, 40, 19, 86, 27, 90],
+                borderColor: '#E2711D',
+                borderWidth: 1,
+                fill: false
+            }, {
+                label: 'GOOG',
+                data: [20, 30, 40, 50, 60, 70, 80],
+                borderColor: '#FFB627',
+                borderWidth: 1,
+                fill: false
+            }, {
+                label: 'PRPH',
+                data: [10, 20, 30, 40, 50, 60, 70], 
+                borderColor: '#E4B363',
+                borderWidth: 1,
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

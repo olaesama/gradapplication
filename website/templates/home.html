@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block body%}
+<br>
+<br>
+<div class="container">
+    {% if user.user_balance %}
+        {% if user.user_balance.balance is not none %}
+            <h1 style="color: #410b13;">Balance: ${{ "{:.2f}".format(abs(user.user_balance.balance)) }}</h1>
+        {% else %}
+            <h1 style="color: #410b13;">Balance: $0.00</h1>
+        {% endif %}
+    {% else %}
+        <h1 style="color: #410b13;">Balance: $0.00</h1>
+    {% endif %}
+
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <br>
+            <h1 style="color: #410b13;">Welcome {{ user.first_name }} to AAG Stock Trading</h1>
+            <p class="lead">Enhance your financial adventure with wise investment decisions.</p>
+            <hr class="my-4">
+            <p>Our goal is to give you an effortless and safe trading environment for stocks. By providing easy-to-use tools and insightful information, we hope to make investing accessible to anyone.</p>
+            <p class="lead">Why choose AAG Stock Trading?</p>
+            <div class="row row-cols-1 row-cols-md-3 g-4 mt-3">
+                <div class="col">
+                    <div class="card h-100" style="background-color: #FFB627; color: #000000;">
+                        <div class="card-body">
+                            <h5 class="card-title">Easy-to-use Interface</h5>
+                            <p class="card-text">Our platform offers an intuitive and user-friendly interface suitable for both beginners and experienced traders.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100" style="background-color: #D58936; color: #000000;">
+                        <div class="card-body">
+                            <h5 class="card-title">Real-time Data and Insights</h5>
+                            <p class="card-text">Access real-time stock data and market insights to make informed decisions about your investments.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card h-100" style="background-color: #E2711D; color: #000000;">
+                        <div class="card-body">
+                            <h5 class="card-title">Commitment to Your Goals</h5>
+                            <p class="card-text">We are committed to helping you achieve your financial goals by providing the tools and support you need.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+<br>
+<h1 align="center" style="color: #410b13;">Give yourself a reminder</h1>
+<br>
+<ul class="list-group list-group-flush" id="notes">
+    {% for note in user.notes %}
+    <li class="list-group-item">
+        {{ note.data }}
+        <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </li>
+    {% endfor %}
+</ul>
+<form method="POST">
+    <textarea name="note" id="note" class="form-control"></textarea>
+    <br />
+    <div align="center">
+        <button type="submit" class="btn" style="background-color: brown; color: white;">Add Note</button>
+    </div>
+</form>
+<br>
+<br>
+<br>
+<br>
+{% endblock %}
